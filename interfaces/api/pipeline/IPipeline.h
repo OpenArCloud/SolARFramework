@@ -30,16 +30,27 @@ namespace SolAR {
 			///
 			/// \brief The IInterface1 class
 			///
+            ///
+            ///
+            ///
+
+                enum  PipelineReturnCode {
+                    _SUCCESS = 0,              /**< the default OK code*/
+                    _INIT_FAILED,	      /**< the initialization of the pipeline went wrong*/
+                    _UPDATE_OK,	          /**< the pipeline has not produced new data*/
+                    _UPDATE_EMPTY,	      /**< the pipeline has produced new data*/
+            };
+
 			class IIPipeline : public virtual org::bcom::xpcf::IComponentIntrospect {
 			public:
 			    virtual ~IIPipeline() = default;
 			    ///
 			    /// \brief pipeline interface
 			    ///
-                virtual FrameworkReturnCode init(const char* confFileName) = 0;
-                virtual FrameworkReturnCode start() = 0;
-                virtual FrameworkReturnCode stop() = 0;
-                virtual FrameworkReturnCode update() = 0;
+                virtual PipelineReturnCode init(const char* confFileName) = 0;
+                virtual PipelineReturnCode start() = 0;
+                virtual PipelineReturnCode stop() = 0;
+                virtual PipelineReturnCode update(std::pair<SRef<SolAR::datastructure::Image>, SolAR::datastructure::Transform3Df>& pipeLineOut) = 0;
             };
 		}
 	}
